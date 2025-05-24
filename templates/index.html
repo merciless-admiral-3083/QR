@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QR Code Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    :root {
+      --clr-primary: #4caf50;
+      --clr-primary-dark: #388e3c;
+      --clr-bg-light: #f5f7fa;
+      --clr-bg-dark: #121212;
+      --clr-text-light: #222;
+      --clr-text-dark: #eee;
+      --clr-card-light: #fff;
+      --clr-card-dark: #1f1f1f;
+      --transition: 0.3s ease-in-out;
+    }
+    
+    body {
+      background: 
+    linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  color: var(--clr-text-light);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: background var(--transition), color var(--transition);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(255 255 255 / 0.1) 2px, transparent 3px),
+    linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    }
+    
+    body.dark-mode {
+      background: 
+    linear-gradient(135deg, #232526 0%, #1c1c1c 100%);
+  color: var(--clr-text-dark);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255 255 255 / 0.05) 1px, transparent 2px),
+    linear-gradient(135deg, #232526 0%, #1c1c1c 100%);
+    }
+    
+    .container {
+      background: var(--clr-card-light);
+      padding: 2.5rem 3rem;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgb(0 0 0 / 0.1);
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      transition: background var(--transition), color var(--transition);
+    }
+    
+    body.dark-mode .container {
+      background: var(--clr-card-dark);
+      box-shadow: 0 20px 40px rgb(0 0 0 / 0.6);
+    }
+    
+    h1 {
+      font-weight: 600;
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+    
+    form {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    input[type="text"] {
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--clr-primary);
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: border-color var(--transition);
+      outline-offset: 2px;
+      outline-color: transparent;
+      background: transparent;
+      color: inherit;
+    }
+    
+    input[type="text"]:focus {
+      border-color: var(--clr-primary-dark);
+      outline-color: var(--clr-primary-dark);
+    }
+    
+    input[type="submit"] {
+      background: var(--clr-primary);
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgb(76 175 80 / 0.4);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    
+    input[type="submit"]:hover {
+      background: var(--clr-primary-dark);
+      box-shadow: 0 8px 20px rgb(56 142 60 / 0.6);
+    }
+    
+    .qr-section {
+      margin-top: 2rem;
+    }
+    
+    .qr-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .qr-image {
+      max-width: 250px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+      transition: box-shadow var(--transition);
+    }
+    
+    .qr-image:hover {
+      box-shadow: 0 12px 30px rgb(0 0 0 / 0.3);
+    }
+    
+    a.download-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background: var(--clr-primary);
+      color: white;
+      text-decoration: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 6px 15px rgb(76 175 80 / 0.4);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    
+    a.download-link:hover {
+      background: var(--clr-primary-dark);
+      box-shadow: 0 8px 20px rgb(56 142 60 / 0.6);
+    }
+    
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--clr-primary);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgb(76 175 80 / 0.5);
+      transition: background var(--transition), box-shadow var(--transition);
+      user-select: none;
+      z-index: 1000;
+    }
+    
+    .theme-toggle:hover {
+      background: var(--clr-primary-dark);
+      box-shadow: 0 8px 20px rgb(56 142 60 / 0.7);
+    }
+    
+    .theme-toggle svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+      transition: transform 0.3s ease;
+    }
+    
+  </style>
+</head>
+<body>
+  
+  <div class="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode" onclick="toggleTheme()" role="button" tabindex="0">
+    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M21.75 15.5a9 9 0 01-11.25-11.25 7.5 7.5 0 009.75 9.75z"/>
+    </svg>
+    
+  </div>
+
+  <main class="container" role="main">
+    <h1>QR Code Generator</h1>
+    <form method="POST" novalidate>
+      <input
+        type="url"
+        name="url"
+        value="{{ user_url }}"
+        placeholder="Enter a valid URL (e.g. https://example.com)"
+        required
+        pattern="https?://.+"
+        title="Please enter a valid URL starting with http:// or https://"
+      />
+      <input type="submit" value="Generate QR Code" />
+    </form>
+
+    {% if qr_image %}
+    <section class="qr-section" aria-live="polite">
+      <h2>Your QR Code:</h2>
+      <img class="qr-image" src="{{ qr_image }}" alt="QR code for {{ user_url }}" />
+      <br />
+      <a class="download-link" href="{{ qr_image }}" download>📥 Download QR Code</a>
+    </section>
+    {% endif %}
+  </main>
+
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const icon = document.getElementById('icon');
+
+    function toggleTheme() {
+  document.body.classList.toggle('dark-mode');
+  if (document.body.classList.contains('dark-mode')) {
+    icon.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <circle cx="12" cy="12" r="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="12" y1="1" x2="12" y2="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="12" y1="21" x2="12" y2="23" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="1" y1="12" x2="3" y2="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="21" y1="12" x2="23" y2="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
+  } else {
+    icon.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+      </svg>
+    `;
+  }
+}
+
+    window.onload = () => {
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    icon.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <circle cx="12" cy="12" r="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="12" y1="1" x2="12" y2="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="12" y1="21" x2="12" y2="23" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="1" y1="12" x2="3" y2="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="21" y1="12" x2="23" y2="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
+  } else {
+    icon.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+      </svg>
+    `;
+  }
+};
+
+    themeToggle.addEventListener('click', () => {
+      if(document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+      } else {
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  </script>
+</body>
+</html>
