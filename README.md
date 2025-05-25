@@ -40,7 +40,7 @@ A simple Flask web app to generate QR codes from URLs. Enter a URL, generate a Q
 python app.py
 ```
 
-Open your browser and go to [http://127.0.0.1:5000](http://127.0.0.1:5000).
+Open your browser and go [https://tinyurl.com/qr-by-jaspreet](here).
 
 ## Project Structure
 
