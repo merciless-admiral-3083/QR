@@ -24,7 +24,7 @@ A simple Flask web app to generate QR codes from URLs. Enter a URL, generate a Q
 1. Clone this repository:
 
    ```sh
-   git clone https://github.com/yourusername/qr-code-generator.git
+   git clone https://github.com/merciless-admiral-3083/QR.git
    cd qr-code-generator
    ```
 
