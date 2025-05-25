@@ -8,9 +8,9 @@ A simple Flask web app to generate QR codes from URLs. Enter a URL, generate a Q
 - Download the generated QR code as a PNG image
 - Responsive, modern UI with light/dark mode toggle
 
-## Demo
+## Screenshots
 
-![Screenshot](static/qr.png)
+![QR Code Generator Screenshot](static/qr.png)
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ A simple Flask web app to generate QR codes from URLs. Enter a URL, generate a Q
 
 ### Installation
 
-1. Clone the repository:
+1. Clone this repository:
 
    ```sh
    git clone https://github.com/yourusername/qr-code-generator.git
@@ -40,30 +40,28 @@ A simple Flask web app to generate QR codes from URLs. Enter a URL, generate a Q
 python app.py
 ```
 
-Visit [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
-
-### Deployment
-
-You can deploy this app using Gunicorn:
-
-```sh
-gunicorn app:app
-```
+Open your browser and go to [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
 ## Project Structure
 
 ```
 app.py
 requirements.txt
-static/
-    qr.png
 templates/
     index.html
+static/
+    qr.png
 ```
 
 - `app.py`: Main Flask application
-- `templates/index.html`: HTML template
+- `templates/index.html`: HTML template for the web UI
 - `static/qr.png`: Generated QR code image
+
+## Usage
+
+1. Enter a valid URL (starting with http:// or https://).
+2. Click "Generate QR Code".
+3. Download the QR code image.
 
 ## License
 
