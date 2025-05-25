@@ -10,7 +10,7 @@ A simple Flask web app to generate QR codes from URLs. Enter a URL, generate a Q
 
 ## Screenshots
 
-![QR Code Generator Screenshot](static/qr.png)
+![QR Code Generator Screenshot](static/qr123.png)
 
 ## Getting Started
 
